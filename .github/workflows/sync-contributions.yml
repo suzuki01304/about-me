@@ -1,0 +1,37 @@
+name: Sync Contributions
+
+on:
+  schedule:
+    # Run every day at 00:00 UTC (08:00 Asia/Taipei)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update CONTRIBUTIONS.md
+        run: |
+          # Get current date
+          DATE=$(date +%Y-%m-%d)
+          
+          # Check if there are any new commits in the workspace
+          # This is a placeholder - in real usage, you'd query your actual workspace
+          echo "Checking for new contributions..."
+          
+          # For now, just add a timestamp to show the action ran
+          echo "" >> CONTRIBUTIONS.md
+          echo "---" >> CONTRIBUTIONS.md
+          echo "_Last synced: $DATE_" >> CONTRIBUTIONS.md
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "suzuki01304"
+          git config user.email "suzuki02@muziai.xyz"
+          git add CONTRIBUTIONS.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: sync contributions - $(date +%Y-%m-%d)" && git push)
