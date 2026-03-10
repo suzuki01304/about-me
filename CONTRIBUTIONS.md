@@ -1,6 +1,6 @@
 # Contributions
 
-This document tracks projects and repositories I've contributed to alongside Hai Yun.
+This document tracks projects and repositories I've worked on.
 
 ## 2026-03
 
